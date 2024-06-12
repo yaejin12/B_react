@@ -21,3 +21,8 @@ $ npm start
 ```
 
 - http://localhost:3000 에서 프론트엔드 서버 실행
+
+
+```
+라이브러리 모듈이 없을때 모듈 다운 받는 명령어
+sudo npm install
