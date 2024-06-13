@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "./ExpenseItem.css";
 import ExpenseDate from "./ExpenseDate";
 import Card from "../UI/Card";
@@ -7,6 +7,15 @@ const ExpenseItem = ({ date, title, price: exPrice }) => {
   const expenseDate = date;
   const expenseTitle = title;
   const expensePrice = exPrice;
+  //let itemTitle = "하하호호"
+
+  //useState는 컴포넌트의 상태값을 관리하며 이 상태값은 렌더링에 영향을 미침
+  /**
+   * useState훅의 리턴값은 배열이며
+   * 첫번째 요소는 상태값의 초기값
+   * 두번째 요소는 해당 상태값을 변경할 때 사용하는 setter 함수
+   */
+  const [itemTitle, setItemTitle] = React.useState(title);
 
   //함수 선언
 
@@ -28,7 +37,11 @@ const ExpenseItem = ({ date, title, price: exPrice }) => {
 
   //이벤트 핸들러 선언
   const clickHandler = (e) => {
-    console.log("click");
+    /**
+     * useState가 관리하는 상태값은 반드시 setter로만 변경해야 합니다.
+     */
+
+    setItemTitle("하하호호123");
   };
 
   return (
@@ -36,14 +49,11 @@ const ExpenseItem = ({ date, title, price: exPrice }) => {
       <ExpenseDate exDate={date} />
       {/* <div>{makeFormattedDate()}</div> */}
       <div className="expense-item__description">
-        <h2>{expenseTitle}</h2>
+        <h2>{itemTitle}</h2>
         <div className="expense-item__price">{formattedPrice}원</div>
       </div>
       <button id="btn" onClick={clickHandler}>
-        버튼
-      </button>
-      <button id="btn2" onMouseOver={(e) => alert("ㅎㅎ")}>
-        버튼2
+        제목수정
       </button>
     </Card>
   );

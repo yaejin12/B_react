@@ -5,6 +5,8 @@ import Bye from "./components/Bye";
 import Greet from "./components/Greet";
 import ExpenseItem from "./components/expenses/ExpenseItem";
 import ExpenseList from "./components/expenses/ExpenseList";
+import Counter from "./components/practice/Counter";
+import NewExpense from "./components/new-expense/NewExpense";
 
 function App() {
   //js문법
@@ -43,6 +45,7 @@ function App() {
 
   return (
     <>
+      <NewExpense />
       {/* 문자열은 {} 생략 가능 나머지는 {} 생략 불가능 */}
       <ExpenseList expenses={expenses} />
     </>
