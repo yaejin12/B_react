@@ -1,55 +1,61 @@
+import React, { useState } from "react";
+import CourseInput from "./components/CourseGoals/CourseInput";
+import CourseList from "./components/CourseGoals/CourseList";
 import "./App.css";
-import React from "react";
-import Hello from "./components/Hello";
-import Bye from "./components/Bye";
-import Greet from "./components/Greet";
-import ExpenseItem from "./components/expenses/ExpenseItem";
-import ExpenseList from "./components/expenses/ExpenseList";
-import Counter from "./components/practice/Counter";
-import NewExpense from "./components/new-expense/NewExpense";
 
-function App() {
-  //js문법
-  // const $h2 = React.createElement("h2", null, "하이하이 곤듀님");
+// 기본 더미 데이터
+const DUMMY_DATA = [
+  {
+    id: "g1",
+    text: "리액트 컴포넌트 스타일링 마스터하기",
+  },
+  {
+    id: "g2",
+    text: "UI/UX 프로그래밍 쌉고수되기",
+  },
+];
 
-  //react 문법
-  const $h2 = <h2>방가방가 곤듀님 </h2>;
+const App = () => {
+  const [goals, setGoals] = useState(DUMMY_DATA);
 
-  /**
-      jsx 규칙
-      1. return 안에 있는 태그는 반드시 하나의 태그로 묶여야함
-      2. 빈 태그는 (닫는 태그가 없는) 반드시 </>로 마감해야한다
-      3.태그의  class속성은 자바스크립트 키워드 class와 겹쳐서 className으로 표기
-      4.의미 없는 부모는<React.Fragment>로 감싸면 됨 -> 축약가능 <>
-      변수나 함수를 출력할때는 {}로 감싸면 된다
-  */
+  // CourseInput에게 전달할 함수
+  const addGoalHandler = (goalObject) => {
+    setGoals([...goals, goalObject]);
+  };
 
-  // 서버에서 지출항목 JSON 배열을 응답받음
-  const expenses = [
-    {
-      title: "치킨먹음",
-      price: 30000,
-      date: new Date(2024, 6 - 1, 3),
-    },
-    {
-      title: "족발먹음",
-      price: 40000,
-      date: new Date(2024, 6 - 1, 7),
-    },
-    {
-      title: "헬스장등록",
-      price: 300000,
-      date: new Date(2024, 6 - 1, 12),
-    },
-  ];
+  // CouseItem에게 전달할 함수
+  const deleteGoalHandler = (id) => {
+    // console.log('id: ', id);
+
+    // let index = -1;
+    // for (let i = 0; i < goals.length; i++) {
+    //   if (goals[i].id === id) {
+    //     index = i;
+    //     break;
+    //   }
+    // }
+    // console.log('index: ', index);
+
+    // goals.splice(
+    //   goals.findIndex((goals) => goals.id === id),
+    //   1
+    // );
+
+    // const filteredGoals = goals.filter((g) => g.id !== id);
+    // filter는 알아서 배열 복사해주기때문에 ... 으로 복사할 필요가 없다
+    setGoals(goals.filter((g) => g.id !== id));
+  };
 
   return (
-    <>
-      <NewExpense />
-      {/* 문자열은 {} 생략 가능 나머지는 {} 생략 불가능 */}
-      <ExpenseList expenses={expenses} />
-    </>
+    <div>
+      <section id="goal-form">
+        <CourseInput onAdd={addGoalHandler} />
+      </section>
+      <section id="goals">
+        <CourseList items={goals} onDelete={deleteGoalHandler} />
+      </section>
+    </div>
   );
-}
+};
 
 export default App;
