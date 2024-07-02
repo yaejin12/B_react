@@ -1,73 +1,31 @@
-// import React, { useState } from "react";
-// import CourseInput from "./components/CourseGoals/CourseInput";
-// import CourseList from "./components/CourseGoals/CourseList";
-// import "./App.css";
-
-// // 기본 더미 데이터
-// const DUMMY_DATA = [
-//   {
-//     id: "g1",
-//     text: "리액트 컴포넌트 스타일링 마스터하기",
-//   },
-//   {
-//     id: "g2",
-//     text: "UI/UX 프로그래밍 쌉고수되기",
-//   },
-// ];
-
-// const App = () => {
-//   const [goals, setGoals] = useState(DUMMY_DATA);
-
-//   // CourseInput에게 전달할 함수
-//   const addGoalHandler = (goalObject) => {
-//     setGoals([...goals, goalObject]);
-//   };
-
-//   // CouseItem에게 전달할 함수
-//   const deleteGoalHandler = (id) => {
-//     // console.log('id: ', id);
-
-//     // let index = -1;
-//     // for (let i = 0; i < goals.length; i++) {
-//     //   if (goals[i].id === id) {
-//     //     index = i;
-//     //     break;
-//     //   }
-//     // }
-//     // console.log('index: ', index);
-
-//     // goals.splice(
-//     //   goals.findIndex((goals) => goals.id === id),
-//     //   1
-//     // );
-
-//     // const filteredGoals = goals.filter((g) => g.id !== id);
-//     // filter는 알아서 배열 복사해주기때문에 ... 으로 복사할 필요가 없다
-//     setGoals(goals.filter((g) => g.id !== id));
-//   };
-
-//   return (
-//     <div>
-//       <section id="goal-form">
-//         <CourseInput onAdd={addGoalHandler} />
-//       </section>
-//       <section id="goals">
-//         <CourseList items={goals} onDelete={deleteGoalHandler} />
-//       </section>
-//     </div>
-//   );
-// };
-
-// export default App;
-
-import React, { Fragment, useState } from "react";
+import React from "react";
 import "./App.css";
-import AddUsers from "./components/Users/AddUsers";
+import Home from "./components/RouteExample/pages/Home";
+import Products from "./components/RouteExample/pages/Products";
+// import AddUsers from "./components/Users/AddUsers";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import RootLayout from "./components/RouteExample/layout/RootLayout";
+import ErrorPage from "./components/RouteExample/pages/ErrorPage";
+import ProductDetail from "./components/RouteExample/pages/ProductDetail";
+
+//라우터 설정
+const router = createBrowserRouter([
+  {
+    path: "/", //절대경로
+    element: <RootLayout />,
+    errorElement: <ErrorPage />, //에러가 났을때 보여줄 페이지
+    children: [
+      { path: "", element: <Home /> },
+      { path: "products", element: <Products /> }, ///products /생략하면 ./ 앞에 생략인 의미
+      { path: "products/:prodId/page/:pageNo", element: <ProductDetail /> }, //   /: 동적 라우터
+    ],
+  },
+]);
 
 const App = () => {
   return (
     <>
-      <AddUsers />
+      <RouterProvider router={router} />
     </>
   );
 };
